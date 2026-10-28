@@ -1,0 +1,25 @@
+<mujoco model="book2_blend">
+  <default>
+    <default class="visual">
+      <geom group="2" type="mesh" contype="0" conaffinity="0"/>
+    </default>
+    <default class="collision">
+      <!-- Softer/less sticky contact makes table and finger interactions smoother for flip-up. -->
+      <geom group="3" condim="4" friction="0.12 0.002 0.0001" solref="0.02 1.0"
+        solimp="0.90 0.96 0.002" margin="0.0005" />
+    </default>
+  </default>
+  <asset>
+    <texture type="2d" name="patterned_brick_floor" file="patterned_brick_floor.png"/>
+    <material name="Material.002" texture="patterned_brick_floor" specular="0.5" shininess="0.25" />
+    <mesh file="book2_blend.obj"/>
+  </asset>
+  <worldbody>
+    <body name="book2_blend">
+      <geom name="book_visual" material="Material.002" mesh="book2_blend"
+        class="visual" mass="0"/>
+      <geom name="book_collision" class="collision" pos="0.075 0.05 0.0125"
+        size="0.075 0.05 0.0125" type="box" mass="1.375"/>
+    </body>
+  </worldbody>
+</mujoco>

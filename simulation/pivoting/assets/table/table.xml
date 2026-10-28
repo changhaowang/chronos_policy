@@ -1,0 +1,31 @@
+<mujoco model="table">
+    <compiler angle="radian" autolimits="true"/>
+    <option impratio="10" />
+    <default>
+        <default class="visual">
+            <geom type="mesh" contype="0" conaffinity="0" group="2" />
+        </default>
+        <default class="collision">
+            <!-- Stable contact over the complete visible tabletop.  A modest
+                 sliding coefficient gives the housing some drag without making
+                 rubber fingertips numerically stick to the table. -->
+            <geom type="mesh" group="3" condim="3"
+                friction="0.15 0.003 0.0001" solref="0.015 2.0"
+                solimp="0.85 0.95 0.004" margin="0.0005" priority="20" />
+        </default>
+    </default>
+
+    <asset>
+        <texture name="wood" file="wood4.png"/>
+        <material name="table" rgba="1 1 1 1" reflectance="0" specular="0.0" texture="wood"
+            shininess="0" />
+    </asset>
+    <worldbody>
+        <body name="table">
+            <geom size="0.7 1 0.05" class="visual" type="box"
+                material="table" />
+            <geom name="table_surface" size="0.7 1 0.05"
+                class="collision" type="box" />
+        </body>
+    </worldbody>
+</mujoco>

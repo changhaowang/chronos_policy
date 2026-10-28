@@ -1,0 +1,87 @@
+<mujoco model="table_conveyor_pick_place">
+  <visual>
+    <headlight diffuse="0.3 0.3 0.3" ambient="0.2 0.2 0.2" specular="0 0 0" />
+  </visual>
+
+  <asset>
+    <texture builtin="gradient" height="256" rgb1=".9 .9 1." rgb2=".2 .3 .4" type="skybox" width="256" />
+    <texture file="../textures/light-gray-floor-tile.png" type="2d" name="texplane" />
+    <material name="floorplane" reflectance="0.01" shininess="0.0" specular="0.0" texrepeat="2 2" texture="texplane" texuniform="true" />
+
+    <texture file="../textures/steel-brushed.png" type="cube" name="tex-steel-brushed" />
+    <material name="steel_mat" reflectance="0.8" shininess="0.8" texrepeat="1 1" texture="tex-steel-brushed" />
+
+    <texture file="../textures/light-gray-plaster.png" type="2d" name="tex-light-gray-plaster" />
+    <material name="walls_mat" reflectance="0.0" shininess="0.1" specular="0.1" texrepeat="3 3" texture="tex-light-gray-plaster" texuniform="true" />
+
+    <texture file="../textures/light-wood.png" type="2d" name="tex-light-wood" />
+    <texture file="../textures/dark-wood.png" type="2d" name="tex-dark-wood" />
+    <material name="light-wood" reflectance="0" texrepeat="15 15" texture="tex-light-wood" texuniform="true" />
+    <material name="dark-wood" reflectance="0" texrepeat="5 5" texture="tex-dark-wood" texuniform="true" />
+
+    <material name="belt_mat" rgba="0.10 0.10 0.10 1" reflectance="0.05" shininess="0.0" specular="0.0" />
+  </asset>
+
+  <worldbody>
+    <light name="spotlight_1" mode="targetbody" pos="0 0 3" dir="0 0 -1" cutoff="50.0" exponent="20" diffuse="0.2 0.2 0.2" />
+
+    <geom condim="3" group="1" material="floorplane" name="floor" pos="0 0 0" size="3 3 .125" type="plane" />
+
+    <geom pos="-1.25 2.25 1.5" quat="0.6532815 0.6532815 0.2705981 0.2705981" size="1.06 1.5 0.01" type="box" conaffinity="0" contype="0" group="1" name="wall_leftcorner_visual" material="walls_mat" />
+    <geom pos="-1.25 -2.25 1.5" quat="0.6532815 0.6532815 -0.2705981 -0.2705981" size="1.06 1.5 0.01" type="box" conaffinity="0" contype="0" group="1" name="wall_rightcorner_visual" material="walls_mat" />
+    <geom pos="1.25 3 1.5" quat="0.7071 0.7071 0 0" size="1.75 1.5 0.01" type="box" conaffinity="0" contype="0" group="1" name="wall_left_visual" material="walls_mat" />
+    <geom pos="1.25 -3 1.5" quat="0.7071 -0.7071 0 0" size="1.75 1.5 0.01" type="box" conaffinity="0" contype="0" group="1" name="wall_right_visual" material="walls_mat" />
+    <geom pos="-2 0 1.5" quat="0.5 0.5 0.5 0.5" size="1.5 1.5 0.01" type="box" conaffinity="0" contype="0" group="1" name="wall_rear_visual" material="walls_mat" />
+    <geom pos="3 0 1.5" quat="0.5 0.5 -0.5 -0.5" size="3 1.5 0.01" type="box" conaffinity="0" contype="0" group="1" name="wall_front_visual" material="walls_mat" />
+
+    <body name="robot_support" pos="0.82 0.24 0.0">
+      <geom pos="0 0 0.1" size="0.1 0.1 0.1" type="box" group="0" friction="1 0.005 0.0001" />
+      <geom pos="0 0 0.1" material="floorplane" size="0.1 0.1 0.1" type="box" conaffinity="0" contype="0" group="1" />
+    </body>
+
+    <body name="conveyor_frame" pos="0.20 0.24 0.22">
+      <geom pos="0 0 -0.03" size="0.22 0.64 0.03" type="box" group="0" friction="1 0.005 0.0001" />
+      <geom pos="0 0 -0.03" size="0.22 0.64 0.03" type="box" conaffinity="0" contype="0" group="1" material="dark-wood" />
+
+      <geom name="conveyor_belt_surface" pos="0 0 0" size="0.18 0.60 0.01" type="box" group="0" friction="0.2 0.005 0.0001" material="belt_mat" />
+
+      <geom pos="0.19 0 0.03" size="0.01 0.60 0.03" type="box" group="0" friction="1 0.005 0.0001" />
+      <geom pos="0.19 0 0.03" size="0.01 0.60 0.03" type="box" conaffinity="0" contype="0" group="1" material="steel_mat" />
+      <geom pos="-0.19 0 0.03" size="0.01 0.60 0.03" type="box" group="0" friction="1 0.005 0.0001" />
+      <geom pos="-0.19 0 0.03" size="0.01 0.60 0.03" type="box" conaffinity="0" contype="0" group="1" material="steel_mat" />
+
+      <geom pos="0 -0.605 0.03" size="0.18 0.01 0.03" type="box" group="0" friction="1 0.005 0.0001" />
+      <geom pos="0 -0.605 0.03" size="0.18 0.01 0.03" type="box" conaffinity="0" contype="0" group="1" material="steel_mat" />
+
+      <geom pos="0 -0.595 0.015" quat="0.7071 0 0.7071 0" size="0.015 0.19" type="cylinder" group="0" friction="1 0.005 0.0001" />
+      <geom pos="0 0.595 0.015" quat="0.7071 0 0.7071 0" size="0.015 0.19" type="cylinder" group="0" friction="1 0.005 0.0001" />
+      <geom pos="0 -0.595 0.015" quat="0.7071 0 0.7071 0" size="0.015 0.19" type="cylinder" conaffinity="0" contype="0" group="1" material="steel_mat" />
+      <geom pos="0 0.595 0.015" quat="0.7071 0 0.7071 0" size="0.015 0.19" type="cylinder" conaffinity="0" contype="0" group="1" material="steel_mat" />
+    </body>
+
+    <body name="target_bin" pos="0.50 0.50 0.22">
+      <geom pos="0 0 0" size="0.10 0.08 0.02" type="box" group="0" friction="1 0.005 0.0001" />
+      <geom pos="0 0 0" size="0.10 0.08 0.02" type="box" conaffinity="0" contype="0" group="1" material="light-wood" />
+
+      <geom pos="0 0.08 0.04" size="0.10 0.01 0.04" type="box" group="0" friction="1 0.005 0.0001" />
+      <geom pos="0 0.08 0.04" size="0.10 0.01 0.04" type="box" conaffinity="0" contype="0" group="1" material="light-wood" />
+      <geom pos="0 -0.08 0.04" size="0.10 0.01 0.04" type="box" group="0" friction="1 0.005 0.0001" />
+      <geom pos="0 -0.08 0.04" size="0.10 0.01 0.04" type="box" conaffinity="0" contype="0" group="1" material="light-wood" />
+      <geom pos="0.10 0 0.04" size="0.01 0.08 0.04" type="box" group="0" friction="1 0.005 0.0001" />
+      <geom pos="0.10 0 0.04" size="0.01 0.08 0.04" type="box" conaffinity="0" contype="0" group="1" material="light-wood" />
+      <geom pos="-0.10 0 0.04" size="0.01 0.08 0.04" type="box" group="0" friction="1 0.005 0.0001" />
+      <geom pos="-0.10 0 0.04" size="0.01 0.08 0.04" type="box" conaffinity="0" contype="0" group="1" material="light-wood" />
+    </body>
+
+    <light diffuse="1.0 1.0 1.0" pos="0 0 3" castshadow="false" />
+    <light diffuse="1.0 1.0 1.0" pos="3 0 3" castshadow="false" />
+    <light diffuse="1.0 1.0 1.0" pos="-3 0 3" castshadow="false" />
+    <light diffuse="1.0 1.0 1.0" pos="0 3 3" castshadow="false" />
+    <light diffuse="1.0 1.0 1.0" pos="0 -3 3" castshadow="false" />
+
+    <camera mode="fixed" name="frontview" pos="1.6 0 1.45" quat="0.56 0.43 0.43 0.56" />
+    <camera mode="fixed" name="birdview" pos="0.2 0 1.5" quat="0.7071 0 0 0.7071" />
+    <camera mode="fixed" name="third_person_camera" pos="-0.185 1.342 1.116" xyaxes="-0.890 -0.456 -0.000 0.241 -0.470 0.849" />
+    <camera mode="fixed" name="visualization_camera" pos="-0.185 1.342 1.116" xyaxes="-0.890 -0.456 -0.000 0.241 -0.470 0.849" />
+  </worldbody>
+</mujoco>

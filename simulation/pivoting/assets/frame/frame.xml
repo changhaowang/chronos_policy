@@ -1,0 +1,25 @@
+<mujoco model="frame">
+  <default>
+    <default class="visual">
+      <geom group="4" type="mesh" contype="0" conaffinity="0"/>
+    </default>
+  </default>
+  <asset>
+    <material name="0.000000_0.000000_0.000000_0.000000_0.000000" specular="0.0" shininess="0.0" rgba="0.0000 0.0000 0.0000 1"/>
+    <material name="0.000000_0.000000_1.000000_0.000000_0.000000" specular="0.0" shininess="0.0" rgba="0.0000 0.0000 1 1"/>
+    <material name="0.282353_0.549020_0.160784_0.000000_0.000000" specular="0.0" shininess="0.0" rgba="0.2824 0.549 0.1608 1"/>
+    <material name="1.000000_0.000000_0.000000_0.000000_0.000000" specular="0.0" shininess="0.0" rgba="1 0.0000 0.0000 1"/>
+    <mesh file="frame_0.obj"/>
+    <mesh file="frame_1.obj"/>
+    <mesh file="frame_2.obj"/>
+    <mesh file="frame_3.obj"/>
+  </asset>
+  <worldbody>
+    <body name="frame">
+      <geom mesh="frame_0" material="0.282353_0.549020_0.160784_0.000000_0.000000" class="visual"/>
+      <geom mesh="frame_1" material="1.000000_0.000000_0.000000_0.000000_0.000000" class="visual"/>
+      <geom mesh="frame_2" material="0.000000_0.000000_0.000000_0.000000_0.000000" class="visual"/>
+      <geom mesh="frame_3" material="0.000000_0.000000_1.000000_0.000000_0.000000" class="visual"/>
+    </body>
+  </worldbody>
+</mujoco>

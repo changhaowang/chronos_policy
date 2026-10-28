@@ -1,0 +1,6 @@
+# Official releases used for the paper's DexMimicGen evaluations.
+# Install with: pip install --no-deps -r simulation/dexmimicgen/requirements.txt
+# Editable sources include controllers, utilities and assets omitted from upstream wheels.
+-e git+https://github.com/ARISE-Initiative/robosuite.git@51cc01785bab80ffeed20da15e67d7dd4140e76a#egg=robosuite
+robomimic @ git+https://github.com/ARISE-Initiative/robomimic.git@e10526b9a40c78b41f1e37e60041dc0ec0a5f60f
+-e git+https://github.com/NVlabs/dexmimicgen.git@940e8a1b3ad70eb1925ada6b364b197de6bb2af9#egg=dexmimicgen

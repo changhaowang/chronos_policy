@@ -1,0 +1,40 @@
+<mujoco model="bookend2_blender">
+  <default>
+    <default class="visual">
+      <geom group="2" type="mesh" contype="0" conaffinity="0"/> <!--  contype⁠=⁠conaffinity⁠=0 make it ignored by dynamics -->
+    </default>
+    <default class="collision_high_friction">
+      <geom group="3" type="mesh" friction="0.8 0.02 0.0000" solref="0.01 1.0" priority="10"/>
+    </default>
+    <default class="collision_low_friction">
+      <geom group="3" type="mesh" friction="0.1 0.02 0.0000" solref="0.01 1.0" priority="10"/>
+    </default>
+    <default class="collision_robot_surface">
+      <!-- Duplicates of the visible wall/pivot/floor used only for gripper
+           contact.  Separate collision bits keep these from doubling the
+           book's contacts while giving the hand a smooth, low-friction stop. -->
+      <geom group="3" type="mesh" friction="0.15 0.003 0.0001"
+            solref="0.015 2.0" solimp="0.85 0.95 0.004"
+            margin="0.0005" priority="20" rgba="0 0 1 0"/>
+    </default>
+  </default>
+  <asset>
+    <texture type="2d" name="rusty_metal_03" file="rusty_metal_03.png"/>
+    <material name="0.615686_0.811765_0.929412_0.000000_0.000000" texture="rusty_metal_03" specular="0.0" shininess="0.0"/>
+    <mesh file="bookend2_blender.obj"/>
+    <mesh file="bookend2_blender_collision_0.obj"/>
+    <mesh file="bookend2_blender_collision_1.obj"/>
+    <mesh file="bookend2_blender_collision_2.obj"/>
+  </asset>
+  <worldbody>
+    <body name="bookend2_blender">
+      <geom material="0.615686_0.811765_0.929412_0.000000_0.000000" mesh="bookend2_blender" class="visual"/>
+      <geom name="book_wall" mesh="bookend2_blender_collision_0" rgba="1 0 0 1" class="collision_high_friction"/>
+      <geom name="book_pivot" mesh="bookend2_blender_collision_1" rgba="0 1 0 1" class="collision_low_friction"/>
+      <geom name="book_floor" mesh="bookend2_blender_collision_2" rgba="0 0 1 1" class="collision_high_friction"/>
+      <geom name="robot_wall_surface" mesh="bookend2_blender_collision_0" class="collision_robot_surface"/>
+      <geom name="robot_pivot_surface" mesh="bookend2_blender_collision_1" class="collision_robot_surface"/>
+      <geom name="robot_floor_surface" mesh="bookend2_blender_collision_2" class="collision_robot_surface"/>
+    </body>
+  </worldbody>
+</mujoco>
